@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>VORONIN — Коммерческий бриф</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-1"></div>
+  <div class="ambient ambient-2"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">V</div>
+      <div>
+        <div class="brand-name">VORONIN</div>
+        <div class="brand-sub">Client Intelligence Brief</div>
+      </div>
+    </div>
+    <div class="draft-state" id="draftState"><span class="dot"></span> Черновик сохраняется автоматически</div>
+  </header>
+
+  <main class="shell">
+    <aside class="sidebar">
+      <div class="sidebar-kicker">Коммерческий бриф</div>
+      <h1>Подготовим базу знаний для AI</h1>
+      <p>Ответьте на вопросы по компании, ассортименту, условиям продаж и реальным обращениям клиентов.</p>
+
+      <div class="progress-card">
+        <div class="progress-row"><span>Прогресс</span><strong id="progressText">1 / 7</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <nav class="steps" id="stepsNav"></nav>
+
+      <div class="security-note">
+        <div class="shield">✓</div>
+        <div><strong>Без выдуманных данных</strong><span>Цена, наличие, сроки и характеристики используются только из подтверждённых источников.</span></div>
+      </div>
+    </aside>
+
+    <section class="content-card">
+      <div class="mobile-progress">
+        <div class="progress-row"><span id="mobileStepName">Шаг 1</span><strong id="mobileProgressText">1 / 7</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="mobileProgressFill"></div></div>
+      </div>
+
+      <form id="briefForm" novalidate>
+        <section class="form-step active" data-step="0">
+          <div class="step-head">
+            <span class="eyebrow">Шаг 1</span>
+            <h2>Компания</h2>
+            <p>Основные данные и источник коммерческой информации.</p>
+          </div>
+
+          <div class="grid two">
+            <label class="field"><span>Название компании <b>*</b></span><input name="company_name" required placeholder="ООО «Компания»"></label>
+            <label class="field"><span>Сайт</span><input name="website" type="url" placeholder="https://example.ru"></label>
+            <label class="field"><span>Контактное лицо</span><input name="contact_name" placeholder="Имя, должность"></label>
+            <label class="field"><span>Телефон / Telegram / WhatsApp</span><input name="contact_phone" placeholder="+7 ..."></label>
+          </div>
+
+          <div class="field-block">
+            <div class="label-title">Формат бизнеса</div>
+            <div class="choice-grid">
+              <label class="choice"><input type="radio" name="business_type" value="Собственное производство"><span>Собственное производство</span></label>
+              <label class="choice"><input type="radio" name="business_type" value="Контрактное производство"><span>Контрактное производство</span></label>
+              <label class="choice"><input type="radio" name="business_type" value="Перепродажа"><span>Перепродажа</span></label>
+              <label class="choice"><input type="radio" name="business_type" value="Смешанный формат"><span>Смешанный формат</span></label>
+            </div>
+          </div>
+
+          <label class="field"><span>Коротко о компании</span><textarea name="company_about" rows="4" placeholder="Что производите, сколько лет на рынке, чем отличаетесь..."></textarea></label>
+        </section>
+
+        <section class="form-step" data-step="1">
+          <div class="step-head"><span class="eyebrow">Шаг 2</span><h2>Ассортимент и характеристики</h2><p>Добавьте основные товарные группы и параметры, которые должен знать AI.</p></div>
+
+          <label class="field"><span>Основные категории продукции <b>*</b></span><textarea name="assortment" required rows="5" placeholder="Воздушно-пузырчатая плёнка; пакеты; стрейч-плёнка; упаковочные материалы..."></textarea><small>Можно перечислить через запятую или с новой строки.</small></label>
+
+          <div class="repeat-head"><div><div class="label-title">Карточки продукции</div><p>Для ключевых SKU или товарных групп.</p></div><button type="button" class="btn ghost small" id="addProductBtn">+ Добавить товар</button></div>
+          <div id="productsList" class="repeat-list"></div>
+
+          <div class="grid two">
+            <label class="field"><span>Стандартные размеры рулонов</span><textarea name="roll_sizes" rows="4" placeholder="Например: 1,2×50 м; 1,5×100 м..."></textarea></label>
+            <label class="field"><span>Плотность / толщина / количество слоёв</span><textarea name="density_specs" rows="4" placeholder="Укажите доступные варианты и допустимые диапазоны"></textarea></label>
+          </div>
+          <label class="field"><span>Нестандартное изготовление</span><textarea name="custom_specs" rows="3" placeholder="Что можно изготовить под заказ и какие есть ограничения?"></textarea></label>
+        </section>
+
+        <section class="form-step" data-step="2">
+          <div class="step-head"><span class="eyebrow">Шаг 3</span><h2>Коммерческие условия</h2><p>Минимальные партии, цены, опт и розница.</p></div>
+
+          <div class="grid two">
+            <label class="field"><span>Минимальная партия</span><input name="min_order" placeholder="Например: от 10 рулонов / от 30 000 ₽"></label>
+            <label class="field"><span>Минимальная сумма заказа</span><input name="min_amount" placeholder="Если есть"></label>
+          </div>
+
+          <label class="field"><span>Как рассчитывается цена? <b>*</b></span><textarea name="pricing_rules" required rows="5" placeholder="Опишите правила: зависит от размера, объёма, плотности, сырья, региона и т. д."></textarea></label>
+
+          <div class="grid two">
+            <label class="field"><span>Оптовые условия</span><textarea name="wholesale_terms" rows="5" placeholder="Порог опта, скидки, оплата, отсрочка, индивидуальные цены..."></textarea></label>
+            <label class="field"><span>Розничные условия</span><textarea name="retail_terms" rows="5" placeholder="Работаете ли с физлицами, можно ли купить 1 рулон, способы оплаты..."></textarea></label>
+          </div>
+
+          <label class="field"><span>Актуальный прайс / источник цен</span><textarea name="price_source" rows="3" placeholder="Ссылка, название файла, CRM/1С или правило: «только после расчёта менеджером»"></textarea></label>
+        </section>
+
+        <section class="form-step" data-step="3">
+          <div class="step-head"><span class="eyebrow">Шаг 4</span><h2>Производство, наличие и доставка</h2><p>Что можно обещать клиенту и что обязательно проверять.</p></div>
+
+          <div class="grid two">
+            <label class="field"><span>Что обычно есть в наличии?</span><textarea name="stock_items" rows="4"></textarea></label>
+            <label class="field"><span>Что производится под заказ?</span><textarea name="made_to_order" rows="4"></textarea></label>
+            <label class="field"><span>Сроки изготовления</span><textarea name="production_times" rows="4" placeholder="Средний / минимальный / максимальный и от чего зависит"></textarea></label>
+            <label class="field"><span>Источник информации об остатках</span><textarea name="stock_source" rows="4" placeholder="1С, CRM, таблица, менеджер..."></textarea></label>
+          </div>
+
+          <label class="field"><span>Регионы доставки <b>*</b></span><textarea name="delivery_regions" required rows="4" placeholder="Москва, МО, вся Россия, СНГ..."></textarea></label>
+          <div class="grid two">
+            <label class="field"><span>Способы доставки</span><textarea name="delivery_methods" rows="4" placeholder="Собственная доставка, СДЭК, Деловые Линии..."></textarea></label>
+            <label class="field"><span>Сроки и стоимость доставки</span><textarea name="delivery_terms" rows="4" placeholder="Что известно заранее, что рассчитывается индивидуально"></textarea></label>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="4">
+          <div class="step-head"><span class="eyebrow">Шаг 5</span><h2>Клиенты и продажи</h2><p>Кому продаёте, кто наиболее ценен и как сейчас работают менеджеры.</p></div>
+
+          <label class="field"><span>Типичные клиенты <b>*</b></span><textarea name="customer_types" required rows="5" placeholder="Маркетплейс-селлеры, мебельные компании, склады, производства..."></textarea></label>
+          <div class="grid two">
+            <label class="field"><span>Самый ценный тип клиента</span><textarea name="ideal_customer" rows="4" placeholder="Кто это, какой средний объём, как часто покупает"></textarea></label>
+            <label class="field"><span>Кому продавать не нужно</span><textarea name="bad_fit" rows="4" placeholder="Слишком маленький объём, другой товар, поставщики, соискатели..."></textarea></label>
+          </div>
+
+          <label class="field"><span>Основные преимущества компании</span><textarea name="advantages" rows="5" placeholder="Цена, производство, качество, скорость, нестандартные размеры, доставка..."></textarea></label>
+          <label class="field"><span>Текущий процесс продажи</span><textarea name="sales_process" rows="4" placeholder="Заявка → квалификация → расчёт → КП → счёт → оплата → производство → доставка"></textarea></label>
+          <label class="field"><span>Текущие скрипты менеджеров</span><textarea name="manager_scripts" rows="6" placeholder="Вставьте примеры первых сообщений, вопросов, ответов на возражения и follow-up"></textarea></label>
+        </section>
+
+        <section class="form-step" data-step="5">
+          <div class="step-head"><span class="eyebrow">Шаг 6</span><h2>Примеры для обучения AI</h2><p>Это ключевой блок для точной квалификации спроса.</p></div>
+
+          <div class="callout"><strong>Лучший формат:</strong> один реальный запрос на строку. Желательно 20–50 примеров в каждом поле.</div>
+
+          <label class="field"><span>Целевые запросы покупателей <b>*</b></span><textarea name="positive_examples" required rows="12" placeholder="Нужно 100 рулонов пузырчатой плёнки в Москве\nИщу производителя ВПП оптом\nКто поставляет упаковочную плёнку для мебели?... "></textarea><small id="positiveCount">0 строк</small></label>
+          <label class="field"><span>Нерелевантные запросы <b>*</b></span><textarea name="negative_examples" required rows="12" placeholder="Ищу работу на производстве упаковки\nПродам станок для изготовления плёнки\nОтдам остатки пузырчатой плёнки..."></textarea><small id="negativeCount">0 строк</small></label>
+          <label class="field"><span>Признаки хорошего лида</span><textarea name="lead_signals" rows="5" placeholder="Ищет поставщика, спрашивает цену, указывает объём, город, срок..."></textarea></label>
+        </section>
+
+        <section class="form-step" data-step="6">
+          <div class="step-head"><span class="eyebrow">Шаг 7</span><h2>Материалы и правила AI</h2><p>Финальные источники истины и ограничения для автоматизации.</p></div>
+
+          <div class="grid two">
+            <label class="field"><span>Сертификаты / документы</span><textarea name="certificates" rows="4" placeholder="Перечень сертификатов, ГОСТ/ТУ, декларации..."></textarea></label>
+            <label class="field"><span>Текущие объявления</span><textarea name="ads_links" rows="4" placeholder="Ссылки на Авито, VK, сайт и другие площадки"></textarea></label>
+          </div>
+
+          <div class="upload-zone">
+            <div class="upload-icon">↥</div>
+            <div><strong>Материалы для базы знаний</strong><p>Прайсы, фото, сертификаты, каталоги, презентации и скриншоты переписок.</p></div>
+            <input id="attachments" type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" />
+          </div>
+          <div id="filesList" class="files-list"></div>
+
+          <div class="rules-card">
+            <h3>Что AI может сообщать без подтверждения менеджера?</h3>
+            <div class="check-grid" id="safeFields">
+              <label><input type="checkbox" name="safe_ai" value="Ассортимент"> Ассортимент</label>
+              <label><input type="checkbox" name="safe_ai" value="Характеристики"> Характеристики</label>
+              <label><input type="checkbox" name="safe_ai" value="Размеры"> Размеры</label>
+              <label><input type="checkbox" name="safe_ai" value="Минимальная партия"> Минимальная партия</label>
+              <label><input type="checkbox" name="safe_ai" value="Сертификаты"> Сертификаты</label>
+              <label><input type="checkbox" name="safe_ai" value="Регионы доставки"> Регионы доставки</label>
+              <label><input type="checkbox" name="safe_ai" value="Цены"> Цены</label>
+              <label><input type="checkbox" name="safe_ai" value="Наличие"> Наличие</label>
+              <label><input type="checkbox" name="safe_ai" value="Сроки"> Сроки</label>
+              <label><input type="checkbox" name="safe_ai" value="Стоимость доставки"> Стоимость доставки</label>
+            </div>
+          </div>
+
+          <label class="field"><span>Что AI обязан уточнять у менеджера?</span><textarea name="must_confirm" rows="5" placeholder="Например: цена, наличие, срок производства, скидка, доставка, нестандартные параметры"></textarea></label>
+
+          <div class="critical-rule">
+            <div class="critical-badge">!</div>
+            <div><strong>Критическое правило</strong><p>AI не имеет права придумывать цену, наличие, сроки, характеристики, скидки или условия. Если подтверждённых данных нет — запрос передаётся менеджеру.</p></div>
+          </div>
+
+          <label class="confirm"><input type="checkbox" name="rules_confirmed" required><span>Подтверждаю, что ответы содержат актуальную коммерческую информацию и могут использоваться для настройки AI-системы. <b>*</b></span></label>
+        </section>
+
+        <div class="form-footer">
+          <button type="button" class="btn ghost" id="prevBtn">← Назад</button>
+          <div class="footer-actions">
+            <button type="button" class="btn ghost" id="exportBtn">Скачать черновик</button>
+            <button type="button" class="btn primary" id="nextBtn">Продолжить →</button>
+            <button type="submit" class="btn primary hidden" id="submitBtn">Завершить и отправить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal hidden" id="successModal">
+    <div class="modal-card">
+      <div class="success-icon">✓</div>
+      <h2>Бриф готов</h2>
+      <p id="successText">Ответы собраны. Файл с данными можно передать команде проекта «Воронин».</p>
+      <div class="modal-actions">
+        <button class="btn ghost" id="downloadFinalBtn">Скачать JSON</button>
+        <button class="btn primary" id="closeModalBtn">Готово</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
