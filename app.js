@@ -1,7 +1,7 @@
 const CONFIG = {
   // Вставьте URL webhook (например, n8n/Make/Formspree) для реальной отправки.
   // Если оставить пустым, итог будет скачиваться JSON-файлом.
-  webhookUrl: "",
+  webhookUrl: "https://n8n-artemzhzhenov.xyz/webhook/voronin-brief-a7x2",
   projectName: "VORONIN Client Brief",
   storageKey: "voronin_client_brief_v1"
 };
