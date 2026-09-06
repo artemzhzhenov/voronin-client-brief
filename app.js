@@ -41,6 +41,7 @@ const downloadFinalBtn = document.getElementById("downloadFinalBtn");
 let currentStep = 0;
 let productCounter = 0;
 let lastPayload = null;
+let submitted = false;
 
 stepNames.forEach((name, i) => {
   const item = document.createElement("div");
@@ -201,6 +202,8 @@ downloadFinalBtn.addEventListener("click", () => lastPayload && downloadJson(las
 
 form.addEventListener("submit", async e => {
   e.preventDefault();
+  // Повторная отправка уже принятого брифа создаёт дубль на приёмной стороне.
+  if (submitted) return;
   if (!validateStep(currentStep)) return;
   const payload = serializeForm();
   lastPayload = payload;
@@ -220,13 +223,21 @@ form.addEventListener("submit", async e => {
       successText.textContent = "Ответы собраны и скачаны в JSON. Чтобы отправлять их автоматически, укажите webhookUrl в app.js.";
     }
     localStorage.setItem(CONFIG.storageKey, JSON.stringify(payload));
+    submitted = true;
     successModal.classList.remove("hidden");
   } catch (err) {
     notify("Не удалось отправить. Скачиваем резервную копию.");
     downloadJson(payload);
   } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Завершить и отправить";
+    if (submitted) {
+      // Кнопка остаётся заблокированной: бриф уже принят.
+      submitBtn.textContent = "Отправлено";
+      exportBtn.textContent = "Скачать копию ответов";
+    } else {
+      // Отправка не удалась — даём попробовать ещё раз.
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Завершить и отправить";
+    }
   }
 });
 
